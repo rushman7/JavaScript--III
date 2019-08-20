@@ -123,16 +123,16 @@ Humanoid.prototype.greet = function() {
     language: 'Elvish',
   });
 
-  console.log(mage.createdAt); // Today's date
-  console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
-  console.log(swordsman.healthPoints); // 15
-  console.log(mage.name); // Bruce
-  console.log(swordsman.team); // The Round Table
-  console.log(mage.weapons); // Staff of Shamalama
-  console.log(archer.language); // Elvish
-  console.log(archer.greet()); // Lilith offers a greeting in Elvish.
-  console.log(mage.takeDamage()); // Bruce took damage.
-  console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
+  // console.log(mage.createdAt); // Today's date
+  // console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
+  // console.log(swordsman.healthPoints); // 15
+  // console.log(mage.name); // Bruce
+  // console.log(swordsman.team); // The Round Table
+  // console.log(mage.weapons); // Staff of Shamalama
+  // console.log(archer.language); // Elvish
+  // console.log(archer.greet()); // Lilith offers a greeting in Elvish.
+  // console.log(mage.takeDamage()); // Bruce took damage.
+  // console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
@@ -143,4 +143,12 @@ Humanoid.prototype.greet = function() {
     Humanoid.call(this, villainAttrs);
   }
 
-  
+  Villain.prototype = Object.create(Humanoid.prototype);
+  Villain.prototype.attack = function(char) {
+    if (char.healthPoints === 0) {
+      return `${char.name}'s HP fell below 0. They are dead.`
+    } else {
+      char.healthPoints = char.healthPoints - 1
+      return `${char.name}'s HP is now ${char.healthPoints}`
+    }
+  }
