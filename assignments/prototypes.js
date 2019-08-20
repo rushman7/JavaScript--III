@@ -20,9 +20,10 @@ function GameObject(gameAttrs) {
   this.createdAt = gameAttrs.createdAt;
   this.name = gameAttrs.name;
   this.dimensions = gameAttrs.dimensions;
-  this.destroy = function() {
-    return `${this.name} was removed from the game.`
-  }
+}
+
+GameObject.prototype.destroy = function() {
+  return `${this.name} was removed from the game.`
 }
 
 /*
@@ -35,9 +36,11 @@ function GameObject(gameAttrs) {
 function CharacterStats(charAttrs) {
   GameObject.call(this, charAttrs);
   this.healthPoints = charAttrs.healthPoints;
-  this.takeDamage = function() {
-    return `${this.name} took damage.`;
-  }
+}
+
+CharacterStats.prototype = Object.create(GameObject.prototype);
+CharacterStats.prototype.takeDamage = function() {
+  return `${this.name} took damage.`;
 }
 
 /*
@@ -55,9 +58,11 @@ function Humanoid(humanAttrs) {
   this.team = humanAttrs.team;
   this.weapons = humanAttrs.weapons;
   this.language = humanAttrs.language;
-  this.greet = function() {
-    return `${this.name} offers a greeting in ${this.language}`;
-  }
+}
+
+Humanoid.prototype = Object.create(CharacterStats.prototype);
+Humanoid.prototype.greet = function() {
+  return `${this.name} offers a greeting in ${this.language}`;
 }
  
 /*
@@ -118,16 +123,16 @@ function Humanoid(humanAttrs) {
     language: 'Elvish',
   });
 
-  // console.log(mage.createdAt); // Today's date
-  // console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
-  // console.log(swordsman.healthPoints); // 15
-  // console.log(mage.name); // Bruce
-  // console.log(swordsman.team); // The Round Table
-  // console.log(mage.weapons); // Staff of Shamalama
-  // console.log(archer.language); // Elvish
-  // console.log(archer.greet()); // Lilith offers a greeting in Elvish.
-  // console.log(mage.takeDamage()); // Bruce took damage.
-  // console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
+  console.log(mage.createdAt); // Today's date
+  console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
+  console.log(swordsman.healthPoints); // 15
+  console.log(mage.name); // Bruce
+  console.log(swordsman.team); // The Round Table
+  console.log(mage.weapons); // Staff of Shamalama
+  console.log(archer.language); // Elvish
+  console.log(archer.greet()); // Lilith offers a greeting in Elvish.
+  console.log(mage.takeDamage()); // Bruce took damage.
+  console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
@@ -136,33 +141,6 @@ function Humanoid(humanAttrs) {
 
   function Villain(villainAttrs) {
     Humanoid.call(this, villainAttrs);
-    this.attack = function() {
-      if (this.healthPoints === 0) {
-        return `${this.name}'s ${this.healthPoints} has reached 0. They are now dead.`
-      } else {
-        this.healthPoints = this.healthPoints - 1
-        return `${this.name} has taken damage and lost health points. Total HP is ${this.healthPoints}`
-      }
-    }
   }
 
-  const duke = new Villain({
-    createdAt: new Date(),
-    dimensions: {
-      length: 1,
-      width: 2,
-      height: 4,
-    },
-    healthPoints: 10,
-    name: 'Baron',
-    team: 'Forest Kingdom',
-    weapons: [
-      'Bow',
-      'Dagger',
-    ],
-    language: 'Elvish',
-  });
-
-  console.log(duke.attack());
-  console.log(duke.attack());
-  console.log(duke.attack());
+  
